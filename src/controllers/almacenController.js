@@ -19,6 +19,7 @@ const getAlmacenes =
 };
 
 const deleteAlmacen =async (req, res) => {
+    try{
     const idAlmacen = req.params.idAlmacen;
     const cantidad = await modelos.hubs.destroy({
       where: { id: idAlmacen },
@@ -26,6 +27,10 @@ const deleteAlmacen =async (req, res) => {
     console.log(cantidad, "debe seri igual a 1");
     if (cantidad == 1) {
       res.status(200).redirect("/listaAlmacenes");
+    }
+    }cathc(error){
+         console.log("ha habido un error", error);
+      return res.status(500).json(error);
     }
   };
 
@@ -42,7 +47,10 @@ const deleteAlmacen =async (req, res) => {
       res.status(200).render("almacenes/Almacen", {
         almacen: alm,
       });
-    } catch (error) {}
+    } catch (error) {
+     console.log("ha habido un error", error);
+      return res.status(500).json(error);
+    }
   };
 
   const postEditAlmacen=async (req, res) => {
@@ -60,7 +68,10 @@ const deleteAlmacen =async (req, res) => {
       );
       console.log(modificado, "el modificado");
       res.status(200).redirect("/listaAlmacenes");
-    } catch (error) {}
+    } catch (error) {
+     console.log("ha habido un error", error);
+      return res.status(500).json(error);
+    }
   };
 
   const getCrearAlmacen= (req, res) => {
