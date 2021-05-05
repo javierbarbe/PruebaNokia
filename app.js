@@ -31,7 +31,7 @@ try {
           console.log(`escuchando en localhost:${PORT}`);
       });
     });
-console.log("database autenticaa fernando");
+console.log("database autenticada");
 } catch (error) {
   console.log('error',error);
 }
