@@ -1,0 +1,44 @@
+{{#each errores as |error|}}
+ <p class="text-danger">{{error}}</p>
+{{/each}}
+
+<br>
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3>Registro Encargado</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/creaEncargado" method="POST">
+                        <div class="form-group">
+                            <input type="type" name="nombre" placeholder="Nombre" class="form-control" autofocus
+                                required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <input type="type" name="apellidos" placeholder="Apellidos" class="form-control" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label >Almacen</label>
+                            <select name="hubId"  required>
+                                {{#each arrayAlmacenes as |almacen|}}
+                                    <option value="{{almacen.id}}">{{almacen.nombre}}</option>
+                                {{/each}}   
+                              
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">
+                                Registrar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

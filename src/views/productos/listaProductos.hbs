@@ -1,0 +1,29 @@
+
+<h2>LISTADO PRODUCTOS</h2>
+<table class="table table-striped text-center">
+    <thead>
+    <th>Nombre</th>
+    <th>Id</th>
+    <th>IDALMACEN</th>
+    <th>precio</th>
+    <th>Cantidad</th>
+    <th>Editar</th>
+    </thead>
+    <tbody>
+    {{#each listaProductos as |producto|}}
+    <tr>
+        <td>{{producto.nombre}}</td>
+        <td>{{producto.id}}</td>
+        <td>{{producto.hubId}}</td>
+        <td>{{producto.precio}}</td>
+        <td>{{producto.cantidad}}</td>
+        <td>
+            <button onclick="location.href='/editProducto/{{producto.id}}/{{producto.hubId}}'" type="button">Editar </button>
+        <button class="btn btn-danger" onclick="location.href='deleteProducto/{{producto.id}}/{{producto.hubId}}'"> ELIMINAR
+        </button></td>
+        <td></td>
+        
+    </tr>
+    {{/each}}
+    </tbody>
+</table>

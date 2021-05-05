@@ -1,0 +1,27 @@
+
+
+<h2>LISTADO ALMACENES</h2>
+<table class="table table-striped  text-center">
+    <thead>
+    <th>Nombre</th>
+    <th>Id</th>
+    <th>Editar</th>
+    <th>Localidad</th>
+    </thead>
+    <tbody>
+    {{#each listaAlmacenes as |almacen|}}
+    <tr>
+        <td>{{almacen.nombre}}</td>
+        <td>{{almacen.id}}</td>
+        <td>
+            <button onclick="location.href='/editAlmacen/{{almacen.id}}'" type="button">Editar </button>
+        {{!-- <button class="btn bnt-info" onclick="eliminarJefe({{encargadoId}})"> elimina functiion extenra</button> --}}
+        <button class="btn btn-danger" onclick="location.href='deleteAlmacen/{{almacen.id}}'"> ELIMINAR
+        </button></td>
+        <td>{{almacen.localidad}}</td>
+        
+    </tr>
+    {{/each}}
+    </tbody>
+</table>
+

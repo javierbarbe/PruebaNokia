@@ -1,0 +1,35 @@
+
+<h2>EDITAR PRODUCTOS</h2>
+{{#each errores as |error|}}
+<p class="text-danger">{{error}}</p>
+{{/each}}
+<form action="/editProducto" method="post">
+<div>
+    <table class="table">
+<thead>
+    <th>Nombre</th>
+    <th>Id</th>
+    <th>Precio</th>
+    <th>Almacen</th>
+    <th>Cantidad</th>
+</thead>
+<tbody>
+    <tr>
+        <td>Nombre: <input type="text" name="nombre" value="{{producto.nombre}}"></td>
+        <td>Id: <input type="text" name="id" value="{{producto.id}}"></td>
+        <td>Precio: <input type="text" name="precio" value="{{producto.precio}}"></td>
+        <td>Almacen: <select name="hubId" >
+            <option value="{{producto.hubId}}" selected>{{producto.hubId}}</option>
+           {{#each almacenes as |almacen|}} 
+            <option value="{{almacen.id}}">{{almacen.nombre}} {{almacen.id}}</option>
+            {{/each}}
+        </select></td>
+        <input style="display: none;" name="hubPrevio" value="{{producto.hubId}}">
+        <td>Cantidad: <input type="text" name="cantidad" value="{{producto.cantidad}}"></td>
+    </tr>
+</tbody>
+    </table>
+    <button type="submit" class="btn btn-success" >
+      EDITAR Producto  </button>
+</div>
+</form>

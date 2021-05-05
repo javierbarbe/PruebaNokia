@@ -1,0 +1,29 @@
+
+
+<h2>El encargado <b> {{encargado_almacen.nombre}}  </b> Regenta: {{encargado_almacen.almacen.nombre}} con Id: {{encargado_almacen.almacen.id}}</h2>
+
+
+<table class="table text-center">
+    <thead>
+        <th>Id Almacen</th>
+        <th>Nombre Almacen</th>
+        <th>Localidad Almacen</th>
+        <th>Nombre articulo</th>
+        <th>Id Articulo</th>
+        <th>Precio Articulo</th>
+        <th>Cantidad Articulo</th>
+    </thead>
+    <tbody>
+        {{#each articulos_almacen as |articulo|}}
+        <tr>
+            <td>{{articulo.hub.id}}</td>
+            <td>{{articulo.hub.nombre}}</td>
+             <td>{{articulo.hub.localidad}}</td>
+             <td>{{articulo.nombre}}</td>
+             <td>{{articulo.id}}</td>
+             <td>{{articulo.precio}}</td>
+             <td>{{articulo.cantidad}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

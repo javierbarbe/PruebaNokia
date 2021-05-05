@@ -1,0 +1,26 @@
+<h2>EDITAR ENCARGADO</h2>
+{{#each errores as |error|}}
+<p class="text-danger">{{error}}</p>
+{{/each}}
+
+<form method="POST" action="/editEncargado/{{encargado.id}}">
+Nombre:
+<input name="nombre" value="{{encargado.nombre}}">
+<br>
+Almacen
+<select name="hubId" id="">
+       
+    {{#each almacenes as |almacen|}}
+        <option value="{{almacen.id}}">{{almacen.id}} {{almacen.nombre}}</option>
+    {{/each}}
+ 
+</select>
+
+<br>
+
+<input type="submit" value="Cambiar">
+
+</form>
+<script>
+
+</script>

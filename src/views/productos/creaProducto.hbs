@@ -1,0 +1,33 @@
+
+<h2>CREACION PRODUCTOS</h2>
+{{#each errores as |error|}}
+<p class="text-danger">{{error}}</p>
+{{/each}}
+<form action="addProducto" method="post">
+<div>
+    <table class="table">
+<thead>
+    <th>Nombre</th>
+    <th>Id</th>
+    <th>Precio</th>
+    <th>Almacen</th>
+    <th>Cantidad</th>
+</thead>
+<tbody>
+    <tr>
+        <td>Nombre: <input type="text" name="nombre"></td>
+        <td>Id: <input type="text" name="id"></td>
+        <td>Precio: <input type="text" name="precio"></td>
+        <td>Almacen: <select name="hubId" >
+           {{#each almacenes as |almacen|}} 
+            <option value="{{almacen.id}}">{{almacen.nombre}}</option>
+            {{/each}}
+        </select></td>
+        <td><input type="text" name="cantidad"></td>
+    </tr>
+</tbody>
+    </table>
+    <button type="submit" class="btn btn-success" >
+      Registrar Producto  </button>
+</div>
+</form>

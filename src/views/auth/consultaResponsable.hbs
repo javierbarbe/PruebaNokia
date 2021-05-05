@@ -1,0 +1,25 @@
+
+
+
+<br>
+{{#if error }}
+
+<p class="text-danger">{{error}}</p>
+{{/if}}
+
+<br>
+<div>
+    <form action="consultaEncargado" method="post">
+        ID responsable a consultar:
+        
+        <select name="idEncargado">
+            {{#each encargados as |encargado|}}
+            <option value="{{encargado.id}}">{{encargado.nombre}} {{encargado.id}}</option>
+            {{/each}}
+        </select>
+        
+        <input type="submit" class="btn btn-success" value="Consultar">
+    </form>
+</div>
+
+   {{!-- await modelos.productos.findAll({ where:{hubId: todo2[0].almacen.id}}) --}}

@@ -1,0 +1,39 @@
+<h2>LISTADO ENCARGADOS</h2>
+<table class="table table-striped  text-center">
+    <thead>
+    <th>Nombre</th>
+    <th>Id</th>
+    <th>IDALMACEN</th>
+    <th>Editar</th>
+    </thead>
+    <tbody>
+    {{#each encargados as |encargado|}}
+    <tr>
+        <td>{{encargado.nombre}}</td>
+        <td>{{encargado.id}}</td>
+        <td>{{encargado.hubId}}</td>
+        <td>
+            <button onclick="location.href='/editEncargado/{{encargado.id}}'" type="button">Editar </button>
+        <button class="btn btn-danger" onclick="location.href='deleteEncargado/{{encargado.id}}'"> ELIMINAR
+        </button></td>
+        <td></td>
+       
+    </tr>
+    {{/each}}
+    </tbody>
+</table>
+
+<script>
+    const http = new XMLHttpRequest();
+
+const eliminarJefe=function (encargadoId){
+    const url= 'deleteEncargado/'+encargadoId;
+    $.get(url,function(data,status){
+        console.log("la data",data);
+    })
+    // location.href=`deleteEncargado/${encargado.id}`
+}
+</script>
+
+
+
