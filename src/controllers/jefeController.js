@@ -84,7 +84,24 @@ const getAddEncargado=  async (req, res) => {
       const {hubId, nombre,almacenPrevio} = req.body;
       console.log('el hubid:',hubId) ;
       console.log('el almacen previo',almacenPrevio);
-    
+    if(hubId!=almacenPrevio){
+      // hay que mover al que tenía ese almacen
+      var encargadoPrevio = JSON.parse(JSON.stringify(await modelos.jefes.findOne({
+       where:{
+         hubId:almacenPrevio
+       }
+      })));
+      if(encargadoPrevio){
+        console.log("en este almacen hay encargado de antes", encargadoPrevio);
+        var almacenAuxiliar = await modelos.hubs.create({
+          nombre:'auxiliar a eliminar',
+          localidad:'localidad auxiliar  a eliminar'
+        });
+        almacenAuxiliar= JSON.parse(JSON.stringify(almacenAuxiliar));
+        console.log('EL ALMACEN AUXILIAR',almacenAuxiliar);
+        // encargadoPrevio = await modelos.jefes.update({hubId})
+      }
+  }
         const modificado = await modelos.jefes.update(
           { nombre: nombre },
           {
