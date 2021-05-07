@@ -1,5 +1,6 @@
 
 const modelos = require("../models");
+// funcion para cargar los almcenes en una variable
 const cargaHubs= async()=>{
     const hubs = await modelos.hubs.findAll();
     var arrayAlmacenes = JSON.parse(JSON.stringify(hubs));
@@ -10,6 +11,7 @@ const listaProductos = async(req,res)=>{
       const arrayProductos = await modelos.productos.findAll();
     var listaProductos = JSON.parse(JSON.stringify(arrayProductos));
     console.log('array de productos',listaProductos);
+        // carga de vista peticion GET con parametros
     res.render('productos/listaProductos',{
         listaProductos : listaProductos
     })
@@ -23,6 +25,7 @@ const listaProductos = async(req,res)=>{
   const getAddProducto =async(req,res)=>{
     try {
       const hubs= await cargaHubs();
+        // carga de vista peticion GET con parametros
       res.render('productos/creaProducto',{
         almacenes: hubs
       });
@@ -36,6 +39,7 @@ const listaProductos = async(req,res)=>{
     const {nombre, precio, hubId, id,cantidad} = req.body;
     try {
       const producto = await modelos.productos.create({nombre,precio,hubId, id,cantidad});
+        // Redireccion mediante GET a metodo previo
       res.status(200).redirect('listaProductos');
     } catch (error) {
       console.log('error al añadir producto',error);
@@ -47,6 +51,7 @@ const listaProductos = async(req,res)=>{
           else errores.push(mistake.message);
       });
       const hubs = await cargaHubs();
+        // carga de vista peticion GET con parametros
       res.status(500).render('productos/creaProducto',{
           errores: errores,
           almacenes: hubs
@@ -61,8 +66,9 @@ const getEditProducto =   async (req,res)=>{
         const producto = await modelos.productos.findOne({
           where: { hubId: idAlmacen, id:idProducto },
         });
+        // parseo de objeto a JSON para que handlebars lo entienda
         var prod = JSON.parse(JSON.stringify(producto));
-        
+        // carga de vista peticion GET con parametros
         const hubs= await cargaHubs();
         res.render('productos/Producto',{
           producto:prod,
@@ -79,6 +85,10 @@ const getEditProducto =   async (req,res)=>{
     try {
       console.log("en postEdit Producto");
       const {nombre, precio, cantidad,hubId,id, hubPrevio} =req.body;
+        // utilizamos hubPrevio por si se desea cambiar de almacen, si cambiase el almacen
+        // el where no funcionaría (no hay ningún producto con ese hub nuevo)
+        // en caso de querer cambiar el id tambien habría que añadir en la vista un input oculto con el valor de
+        // el id antes de modificarlo ( repetir la misma operacion que en este caso) 
       const modificado = await modelos.productos.update(
         { nombre: nombre, precio: precio, hubId:hubId, id:id,cantidad: cantidad},
         {
