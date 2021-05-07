@@ -88,9 +88,10 @@ const getAddEncargado=  async (req, res) => {
       // hay que mover al que tenía ese almacen
       var encargadoPrevio = JSON.parse(JSON.stringify(await modelos.jefes.findOne({
        where:{
-         hubId:almacenPrevio
+         hubId:hubId
        }
       })));
+      console.log("el resultado de encargadoPRevio", encargadoPrevio);
       // compruebo que hay encargado
       if(encargadoPrevio){
           console.log("en este almacen hay encargado de antes", encargadoPrevio);
@@ -104,7 +105,10 @@ const getAddEncargado=  async (req, res) => {
           // parseo a json almacen auxiliar
           almacenAuxiliar= JSON.parse(JSON.stringify(almacenAuxiliar));
           console.log('EL ALMACEN AUXILIAR',almacenAuxiliar);
+          
 
+          console.log('el id auxiliar del almacen',almacenAuxiliar.id);
+          console.log('el iddel encargadoPevio', encargadoPrevio.id);
           // actualizacion del encargado que estaba en el almacén en el que quiero colocar al encargado que estoy editando
           encargadoPrevio = await modelos.jefes.update(
               {hubId:almacenAuxiliar.id},
@@ -137,17 +141,18 @@ const getAddEncargado=  async (req, res) => {
                 await modelos.hubs.destroy({
                   where: { id: almacenAuxiliar.id },
                 })
-        }
-  }else{
-    const modificado = await modelos.jefes.update(
-      { nombre: nombre },
-      {
-        where: {
-          id: idEncargado,
-        },
-      }
-    );
-  }        
+        }else{
+          console.log("no han habido conflictos de jefes en el mismo hub");
+          const modificado = await modelos.jefes.update(
+            { nombre: nombre, hubId:hubId },
+            {
+              where: {
+                id: idEncargado,
+              },
+            }
+          );
+        } 
+  }       
       // para cambiar al encargado de  almacen requeriremos un almacen comodín... para hacer la transicion entre uno y otro 
       res.status(200).redirect("/listarEncargados");
     } catch (error) {
