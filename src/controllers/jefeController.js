@@ -110,17 +110,17 @@ const getAddEncargado=  async (req, res) => {
           console.log('el id auxiliar del almacen',almacenAuxiliar.id);
           console.log('el iddel encargadoPevio', encargadoPrevio.id);
           // actualizacion del encargado que estaba en el almacén en el que quiero colocar al encargado que estoy editando
-          encargadoPrevio = await modelos.jefes.update(
+          await modelos.jefes.update(
               {hubId:almacenAuxiliar.id},
               {
                 where:{
                   id:encargadoPrevio.id
                 } 
               });
-
+console.log('despues  del update el encaragadoPrevio queda...',encargadoPrevio);
           // actualizacion del encargado editado
               var modificado = await modelos.jefes.update(
-                { nombre: nombre },
+                { nombre: nombre, hubId:hubId },
                 {
                   where: {
                     id: idEncargado,
