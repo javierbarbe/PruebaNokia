@@ -91,28 +91,64 @@ const getAddEncargado=  async (req, res) => {
          hubId:almacenPrevio
        }
       })));
+      // compruebo que hay encargado
       if(encargadoPrevio){
-        console.log("en este almacen hay encargado de antes", encargadoPrevio);
-        var almacenAuxiliar = await modelos.hubs.create({
-          nombre:'auxiliar a eliminar',
-          localidad:'localidad auxiliar  a eliminar'
-        });
-        almacenAuxiliar= JSON.parse(JSON.stringify(almacenAuxiliar));
-        console.log('EL ALMACEN AUXILIAR',almacenAuxiliar);
-        // encargadoPrevio = await modelos.jefes.update({hubId})
+          console.log("en este almacen hay encargado de antes", encargadoPrevio);
+
+          //creacion almacen auxiliar
+          var almacenAuxiliar = await modelos.hubs.create({
+            nombre:'auxiliar a eliminar',
+            localidad:'localidad auxiliar  a eliminar'
+          });
+
+          // parseo a json almacen auxiliar
+          almacenAuxiliar= JSON.parse(JSON.stringify(almacenAuxiliar));
+          console.log('EL ALMACEN AUXILIAR',almacenAuxiliar);
+
+          // actualizacion del encargado que estaba en el almacén en el que quiero colocar al encargado que estoy editando
+          encargadoPrevio = await modelos.jefes.update(
+              {hubId:almacenAuxiliar.id},
+              {
+                where:{
+                  id:encargadoPrevio.id
+                } 
+              });
+
+          // actualizacion del encargado editado
+              var modificado = await modelos.jefes.update(
+                { nombre: nombre },
+                {
+                  where: {
+                    id: idEncargado,
+                  },
+                }
+              );
+          
+              //reasignacion del hub que deja libre el encargado editado al encargado que ha sido sustituido
+              encargadoPrevio = await modelos.jefes.update(
+                {hubId:almacenPrevio},
+                {
+                  where:{
+                    id:encargadoPrevio.id
+                  }
+                });
+
+                // eliminacion del hub auxiliar
+                await modelos.hubs.destroy({
+                  where: { id: almacenAuxiliar.id },
+                })
+        }
+  }else{
+    const modificado = await modelos.jefes.update(
+      { nombre: nombre },
+      {
+        where: {
+          id: idEncargado,
+        },
       }
-  }
-        const modificado = await modelos.jefes.update(
-          { nombre: nombre },
-          {
-            where: {
-              id: idEncargado,
-            },
-          }
-        );
-     
+    );
+  }        
       // para cambiar al encargado de  almacen requeriremos un almacen comodín... para hacer la transicion entre uno y otro 
-       
       res.status(200).redirect("/listarEncargados");
     } catch (error) {
       var listaErrores = [];
