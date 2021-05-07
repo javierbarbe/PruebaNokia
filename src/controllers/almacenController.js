@@ -30,7 +30,7 @@ const deleteAlmacen =async (req, res) => {
     if (cantidad == 1) {
       res.status(200).redirect("/listaAlmacenes");
     }
-    }cathc(error){
+    }catch(error){
          console.log("ha habido un error", error);
       return res.status(500).json(error);
     }

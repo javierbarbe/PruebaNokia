@@ -61,8 +61,7 @@ const listaProductos = async(req,res)=>{
   };
 const getEditProducto =   async (req,res)=>{
     try {
-        const idProducto = req.params.idProducto;
-        const idAlmacen = req.params.idAlmacen;
+        const {idProducto,idAlmacen} = req.params;
         const producto = await modelos.productos.findOne({
           where: { hubId: idAlmacen, id:idProducto },
         });
@@ -107,8 +106,7 @@ const getEditProducto =   async (req,res)=>{
 
 const deleteProducto =   async(req,res)=>{
     console.log("he pulsado en delete producto");
-    const idProducto= req.params.idProducto;
-    const hubId= req.params.hubId;
+    const {idProducto, hubId}= req.params;
     try {
       const eliminado = await modelos.productos.destroy({
         where: { id: idProducto, hubId:hubId },

@@ -83,11 +83,9 @@ const getAddEncargado=  async (req, res) => {
     try {
       console.log(idEncargado);
       console.log(req.body.nombre);
-      const hubId = req.body.hubId;
-      const nombre = req.body.nombre;
+      const {hubId, nombre} = req.body;
       console.log('el hubid:',hubId) ;
       // para cambiar al encargado de  almacen requeriremos un almacen comodín... para hacer la transicion entre uno y otro
-      
         const modificado = await modelos.jefes.update(
           { nombre: nombre, hubId: hubId },
           {
@@ -114,6 +112,7 @@ const getAddEncargado=  async (req, res) => {
       const encargado = await modelos.jefes.findOne({
         where: { id: idEncargado },
       });
+      // parseo a objeto 
       var enca = JSON.parse(JSON.stringify(encargado));
       console.log(enca, "el almacen cuya ide es" + idEncargado);
       const hubs= await cargaHubs();
@@ -127,6 +126,7 @@ const getAddEncargado=  async (req, res) => {
   const getConsultaEncargado=async (req,res)=>{
     try {
     const listaEncargados = await modelos.jefes.findAll();
+      // parseo a objeto 
     var jefes = JSON.parse(JSON.stringify(listaEncargados));
     res.render('auth/consultaResponsable',{
       encargados:jefes
@@ -140,18 +140,16 @@ const getAddEncargado=  async (req, res) => {
   const postConsultaEncargado =async (req,res)=>{
     try {
       const idEncargado = req.body.idEncargado;
+      // consulta-relacion entre jefe y almacen
       const todo = await modelos.jefes.findAll({include:[{model:modelos.hubs, as :'almacen'}], where:{ id:idEncargado}});
+      // parseo a objeto 
       const todo2= JSON.parse(JSON.stringify(todo));
-      console.log('todo TOOOOOOOOOOOOOODO', todo2[0]);
-      console.log("el id del almacen", todo2[0].almacen.id);
-      console.log("========================================\n==============================\n===============");
+      // consulta-relacion entre productos y almacen y parseo a objeto
       const todosProd= JSON.parse(JSON.stringify(
         await modelos.productos.findAll({include:[{model:modelos.hubs, as: 'hub' }], where:{hubId: todo2[0].almacen.id}})
         ));
     
-        console.log('todos los prods',todosProd);
-      
-      console.log(idEncargado);
+      // renderizacion mediante GET a vista + parametros
       res.status(200).render('auth/vistaConsulta',{
         encargado_almacen:todo2[0],
         articulos_almacen:todosProd
@@ -160,7 +158,6 @@ const getAddEncargado=  async (req, res) => {
     } catch (error) {
 
       console.log('error',error);
-      var paco='paco';
       res.status(500).render('auth/consultaResponsable',{
         error:error
       });
@@ -183,12 +180,12 @@ const getAddEncargado=  async (req, res) => {
   };
 
   module.exports= {
-getAddEncargado,
-postAddEncargado,
-deleteEncargado,
-getEditarEncargado,
-postEditEncargado,
-getConsultaEncargado,
-postConsultaEncargado,
-listarEncargados
+    getAddEncargado,
+    postAddEncargado,
+    deleteEncargado,
+    getEditarEncargado,
+    postEditEncargado,
+    getConsultaEncargado,
+    postConsultaEncargado,
+    listarEncargados
   }
