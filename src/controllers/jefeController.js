@@ -39,9 +39,7 @@ const getAddEncargado=  async (req, res) => {
   };
 
   const deleteEncargado =async (req, res) => {
-
-
-      
+  
     try {
       const idEncargado = req.params.idEncargado;
       console.log("el idEncargado pasado por paramETRP", idEncargado);
@@ -83,17 +81,21 @@ const getAddEncargado=  async (req, res) => {
     try {
       console.log(idEncargado);
       console.log(req.body.nombre);
-      const {hubId, nombre} = req.body;
+      const {hubId, nombre,almacenPrevio} = req.body;
       console.log('el hubid:',hubId) ;
-      // para cambiar al encargado de  almacen requeriremos un almacen comodín... para hacer la transicion entre uno y otro
+      console.log('el almacen previo',almacenPrevio);
+    
         const modificado = await modelos.jefes.update(
-          { nombre: nombre, hubId: hubId },
+          { nombre: nombre },
           {
             where: {
               id: idEncargado,
             },
           }
         );
+     
+      // para cambiar al encargado de  almacen requeriremos un almacen comodín... para hacer la transicion entre uno y otro 
+       
       res.status(200).redirect("/listarEncargados");
     } catch (error) {
       var listaErrores = [];

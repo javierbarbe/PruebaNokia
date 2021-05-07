@@ -1,5 +1,5 @@
 <br>
-<div>
+{{!-- <div>
     <form action="/crearAlmacen" method="post">
         Nombre: 
         <input name="nombre" type="text">
@@ -9,4 +9,36 @@
         <br>
         <input type="submit" value="Crear Almacen">
     </form>
+</div> --}}
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3>Registro Almacén</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/crearAlmacen" method="POST">
+                        <div class="form-group">
+                             Nombre: 
+                        <input name="nombre" type="text" class="form-control" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            Localidad:
+                            <input type="text" name="localidad" class="form-control" required>
+                        </div>
+                        <br>
+                       
+                        <br>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">
+                                Registrar Almacen
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

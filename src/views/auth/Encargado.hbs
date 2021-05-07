@@ -1,4 +1,4 @@
-<h2>EDITAR ENCARGADO</h2>
+{{!-- <h2>EDITAR ENCARGADO</h2>
 {{#each errores as |error|}}
 <p class="text-danger">{{error}}</p>
 {{/each}}
@@ -20,7 +20,45 @@ Almacen
 
 <input type="submit" value="Cambiar">
 
-</form>
-<script>
-
-</script>
+</form> --}}
+{{#each errores as |error|}}
+<p class="text-danger">{{error}}</p>
+{{/each}}
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3>EDITAR ENCARGADO</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/editEncargado/{{encargado.id}}" method="POST">
+                        <div class="form-group">
+                             Nombre: 
+                        <input name="nombre" type="text" value="{{encargado.nombre}}" class="form-control" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                           Almacen:
+                           <br>
+                            <select name="hubId" >
+                                <option value="{{encargado.hubId}}">Almacen Previo {{encargado.hubId}}</option>
+                                    {{#each almacenes as |almacen|}}
+                                        <option value="{{almacen.id}}">{{almacen.id}} {{almacen.nombre}}</option>
+                                    {{/each}}
+                            </select>
+                        </div>
+                        <br>
+                       <input type="text" style="display: none;" name="almacenPrevio" value="{{encargado.hubId}}">
+                        <br>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">
+                                Modificar Encargado
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
