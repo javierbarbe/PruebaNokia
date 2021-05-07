@@ -86,7 +86,8 @@ const getAddEncargado=  async (req, res) => {
       const hubId = req.body.hubId;
       const nombre = req.body.nombre;
       console.log('el hubid:',hubId) ;
-      // if(hubId.length>0){
+      // para cambiar al encargado de  almacen requeriremos un almacen comodín... para hacer la transicion entre uno y otro
+      
         const modificado = await modelos.jefes.update(
           { nombre: nombre, hubId: hubId },
           {
